@@ -1,19 +1,3 @@
-/*******************************************************************************************
- *
- *   raygui - portable window
- *
- *   DEPENDENCIES:
- *       raylib 4.0  - Windowing/input management and drawing.
- *       raygui 3.0  - Immediate-mode GUI controls.
- *
- *   COMPILATION (Windows - MinGW):
- *       gcc -o $(NAME_PART).exe $(FILE_NAME) -I../../src -lraylib -lopengl32 -lgdi32 -std=c99
- *
- *   LICENSE: zlib/libpng
- *
- *   Copyright (c) 2016-2023 Ramon Santamaria (@raysan5)
- *
- **********************************************************************************************/
 package main
 
 import (
@@ -26,12 +10,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-// ------------------------------------------------------------------------------------
-// Program main entry point
-// ------------------------------------------------------------------------------------
 func main() {
-	// Initialization
-	//---------------------------------------------------------------------------------------
 	currdir, err := os.Getwd()
 	if err != nil {
 		fmt.Println(err)
@@ -48,7 +27,6 @@ func main() {
 	rl.SetConfigFlags(rl.FlagWindowUndecorated)
 	rl.InitWindow(screenWidth, screenHeight, "caster-gui")
 
-	// General variables
 	var (
 		mousePosition  = rl.Vector2{0, 0}
 		windowPosition = rl.Vector2{500, 200}
@@ -68,12 +46,10 @@ func main() {
 
 	var host_bounds = rl.Rectangle{200, 200, 300, 30}
 	var spectate_bounds = rl.Rectangle{200, 300, 300, 30}
-	//--------------------------------------------------------------------------------------
 
-	// Main game loop
-	for !exitWindow && !rl.WindowShouldClose() { // Detect window close button or ESC key
-		// Update
-		//----------------------------------------------------------------------------------
+
+	for !exitWindow && !rl.WindowShouldClose() {
+
 		mousePosition = rl.GetMousePosition()
 
 		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
@@ -93,10 +69,7 @@ func main() {
 
 			rl.SetWindowPosition(int(windowPosition.X), int(windowPosition.Y))
 		}
-		//----------------------------------------------------------------------------------
 
-		// Draw
-		//----------------------------------------------------------------------------------
 		rl.BeginDrawing()
 
 		rl.ClearBackground(rl.RayWhite)
@@ -165,10 +138,7 @@ func main() {
 			spectate_state = false
 		}
 		rl.EndDrawing()
-		//----------------------------------------------------------------------------------
 	}
 
-	// De-Initialization
-	//--------------------------------------------------------------------------------------
-	rl.CloseWindow() // Close window and OpenGL context
+	rl.CloseWindow()
 }
