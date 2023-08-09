@@ -15,9 +15,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	println(currdir)
 	caster := currdir + "\\cccaster.v3.1.exe"
-	println(caster)
 	const (
 		screenWidth  = 1280
 		screenHeight = 720
