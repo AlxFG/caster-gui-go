@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
+	"unicode"
 
 	rg "github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -37,8 +39,8 @@ func main() {
 	exitWindow := false
 
 	rl.SetTargetFPS(60)
-	var host string = ""
-	var spectate string = ""
+	host := ""
+	spectate := ""
 	host_state := true
 	spectate_state := false
 
@@ -77,6 +79,12 @@ func main() {
 		rl.DrawText(fmt.Sprintf("IP:Port"), 10, 200, 30, rl.DarkGray)
 		rg.TextBox(host_bounds, &host, 1024, host_state)
 		if rg.Button(rl.Rectangle{500, 200, 80, 30}, "Connect/Host") {
+			host = strings.Map(func(r rune) rune {
+				if unicode.IsPrint(r) {
+					return r
+				}
+				return -1
+			}, host)
 			cmd := exec.Command(caster, "-n", host)
 			err := cmd.Run()
 
@@ -86,6 +94,12 @@ func main() {
 			host = ""
 		}
 		if rg.Button(rl.Rectangle{580, 200, 60, 30}, "Paste") {
+			host = strings.Map(func(r rune) rune {
+				if unicode.IsPrint(r) {
+					return r
+				}
+				return -1
+			}, host)
 			cmd := exec.Command(caster, "-n", rl.GetClipboardText())
 			err := cmd.Run()
 			if err != nil {
@@ -101,6 +115,12 @@ func main() {
 		rg.TextBox(spectate_bounds, &spectate, 1024,
 			spectate_state)
 		if rg.Button(rl.Rectangle{500, 300, 80, 30}, "Connect") {
+			spectate = strings.Map(func(r rune) rune {
+				if unicode.IsPrint(r) {
+					return r
+				}
+				return -1
+			}, spectate)
 			cmd := exec.Command(caster, "-ns", spectate)
 			err := cmd.Run()
 			if err != nil {
@@ -109,6 +129,12 @@ func main() {
 			spectate = ""
 		}
 		if rg.Button(rl.Rectangle{580, 300, 60, 30}, "Paste") {
+			spectate = strings.Map(func(r rune) rune {
+				if unicode.IsPrint(r) {
+					return r
+				}
+				return -1
+			}, spectate)
 			cmd := exec.Command(caster, "-ns", rl.GetClipboardText())
 			err := cmd.Run()
 			if err != nil {
